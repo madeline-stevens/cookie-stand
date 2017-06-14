@@ -6,6 +6,8 @@ var hours = ['6am', '7am', '8am', '9am', '10am', '11am', '12pm', '1pm', '2pm','3
 
 var samStore = [];
 
+var shopTable = document.getElementById ('shops');
+
 //object constructor aka the maker of the stores (with properties)
 function Store(location, minCustomersPerHour, maxCustomersPerHour, avgCookiesPerSale) {
   this.location = location;
@@ -19,7 +21,7 @@ function Store(location, minCustomersPerHour, maxCustomersPerHour, avgCookiesPer
 };
 
 //methods
-//getting an random number of people per hour
+//method #1 getting an random number of people per hour
 Store.prototype.calcCustomersPerHour = function() {
   for(var i = 0; i < hours.length; i++){
     var cust = Math.floor(Math.random() * (this.maxCustomersPerHour - this.minCustomersPerHour) + this.minCustomersPerHour);
@@ -29,7 +31,7 @@ Store.prototype.calcCustomersPerHour = function() {
   // return this.cookiesSoldEachHour;
 };
 
-//calculating cookie sales per hour
+//method #2 calculating cookie sales per hour
 Store.prototype.getCookiesSold = function () {
   this.calcCustomersPerHour();
   for (var i = 0; i < hours.length; i++) {
@@ -40,15 +42,6 @@ Store.prototype.getCookiesSold = function () {
   return this.hourlySales;
 };
 
-// //render to table
-// Store.prototype.createHeaderRow = function () {
-//   var tableRow = document.createElement ('tr');
-//   var tableData = document.createElement ('td');
-//   var tableHeader = document.createElement ('th');
-//   tableHeader.textContent = this.location;
-//   tableRow.appendChild (tableHeader);
-// }
-
 //the stores without variables ...
 var pike = new Store('Pike Place Market', 23, 65, 6.5);
 var seaTac = new Store('SeaTac Aiport', 3, 24, 1.2);
@@ -56,12 +49,30 @@ var seaCenter = new Store('Seattle Center', 11, 38, 3.7);
 var capHill = new Store('Capitol Hill', 20, 38, 2.3);
 var alki = new Store('Alki', 3, 24, 1.2);
 
-
 pike.getCookiesSold ();
 seaTac.getCookiesSold ();
 seaCenter.getCookiesSold ();
 capHill.getCookiesSold ();
 alki.getCookiesSold ();
+
+//render to a table
+
+Store.prototype.render = function () {
+  var tableRow = document.createElement ('tr');
+  var tableData = document.createElement ('td');
+  tableData.textContent = ' !!!!! ';
+  tableRow.appendChild (tableData);
+  shopTable.appendChild (tableRow);
+};
+
+//rendering the header row
+Store.prototype.createHeaderRow = function () {
+  var tableRow = document.createElement ('tr');
+  var tableData = document.createElement ('td');
+  var tableHeader = document.createElement ('th');
+  tableHeader.textContent = this.location;
+  tableRow.appendChild (tableHeader);
+};
 
 //
 // //arrays
