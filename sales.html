@@ -9,22 +9,22 @@
   <body>
     <h2>Cookies needed for each location</h2>
     <div class="cont">
-      <form id="newLocations">
+      <form id="newLocations"> <!--sam put "add-location" (use kabob case)-->
         <fieldset>
           <legend> Add new store location information here </legend>
           <label for="loca">Location: </label>
-          <input name="loca" type="text"/>
+          <input name="loca" type="text"/> <!--input type is text-->
 
           <label for="minCust"> min-customers: </label>
-          <input name="minCust" type="text"/>
+          <input name="minCust" type="text"/> <!--input type can be number!!!!-->
 
           <label for="maxCust">max-customers: </label>
           <input name="maxCust" type="text"/>
 
           <label for="avgC">Avg-Cookies-Sold: </label>
-          <input name="avgC" type="text"/>
+          <input name="avgC" type="text"/> <!--leave this as id text, later we will use a parseFloat to turn this into a number, do this within the function handeForm(e)-->
 
-          <button type="submit">Submit</button>
+          <button type="submit">Click here to add!</button>
         </fieldset>
       </form>
     </div>
