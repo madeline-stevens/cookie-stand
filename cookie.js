@@ -9,6 +9,9 @@ var samStore = [];
 // declaring a variable called shopTable and rendering to the DOM using the id of shops and we'll be using this later which is why it needs to be global
 var shopTable = document.getElementById('shops');
 
+//sam added this
+//var theForm...
+
 //CONSTRUCTOR FUNCTION (that is technically an object) aka the maker of the stores (with properties)
 function Store(location, minCustomersPerHour, maxCustomersPerHour, avgCookiesPerSale) {
   //properties that will become instances on the store objects to come
@@ -41,14 +44,7 @@ Store.prototype.getCookiesSold = function () {
     this.hourlySales.push(cookies);
     this.totalSales += cookies; //+-hourlysales becuase we're adding the hourly sales to the total sales which starts at 0.
   }
-  // return this.hourlySales; DONT NEED..?
 };
-
-// pike.getCookiesSold ();
-// seaTac.getCookiesSold ();
-// seaCenter.getCookiesSold ();
-// capHill.getCookiesSold ();
-// alki.getCookiesSold ();
 
 //****************************************
 //functions to create (or render) the table
@@ -70,7 +66,6 @@ Store.prototype.render = function() {
   trEl.appendChild(tdEl);
   shopTable.appendChild(trEl);
 };
-//this is where I will call the store, on the line above
 
 //create header row
 function createHeaderRow () {
@@ -89,7 +84,7 @@ function createHeaderRow () {
   shopTable.appendChild(headrow);
 }
 
-//
+//    ...need to add parseInt after equals
 function handleSubmission(event) {
   event.preventDefault();
   var localInput = event.target.loca.value;
@@ -97,6 +92,7 @@ function handleSubmission(event) {
   var maxInput = event.target.maxCust.value;
   var avgCookies = event.target.avgC.value;
 
+//changed this to var newStore= new CookieStand (loc, min, max, avg)
   new Store (localInput, minInput, maxInput, avgCookies);
 
   event.target.loca.value = null;
@@ -106,7 +102,7 @@ function handleSubmission(event) {
 }
 
 createHeaderRow ();
-//these are the instances. I moved this down, past the
+//these are going to create the instances. I moved this down, past the
 new Store('Pike Place Market', 23, 65, 6.5);
 new Store('SeaTac Airport', 3, 24, 1.2);
 new Store('Seattle Center', 11, 38, 3.7);
@@ -114,51 +110,46 @@ new Store('Capitol Hill', 20, 38, 2.3);
 new Store('Alki', 3, 24, 1.2);
 
 newLocations.addEventListener('submit', handleSubmission);
-
-//now we have to push itmes into the above header column
-  //below is the first draft of the header row
-  // Store.prototype.createHeaderRow = function () {
-  // var tableRow = document.createElement ('tr');
-  // var tableData = document.createElement ('td');
-  // var tableHeader = document.createElement ('th');
-  // tableHeader.textContent = this.location;
-  // tableRow.appendChild (tableHeader);
-
-// }
-// Store.prototype.render = function () {
-//   var tableRow = document.createElement ('tr');
-//   var tableData = document.createElement ('td');
-//   tableData.textContent = ' !!!!! ';
-//   tableRow.appendChild (tableData);
-//   shopTable.appendChild (tableRow);
-// };
-//
-// tdel.textcontent = this.location //this is waht's putting teh names of hte stores in teh header column
-//
-// //rendering the data to teh dom in each cell
-// for (var i =0; i < this.hourlySales....)
-// tdel = document.createElement('td')
-// tdEl.textContent = this.cookie)
-// ...
-//
-// //appending to teh table
-// shopTable.appendChild (trEl)
 //***********************
 
 //SAM'S ROUGH DRAFT
-//totals column
+creating the totals footer row and footer column....
+function random (min, max) {
 
-//function headerrow (){}
-//function  table rows (){}
-//function totals () {} //the totals on the far right should be a header
+}
 
-//function render table...
-//make the header row ();
-//make table rows
-//make footer
+function handleForm(event){ //sam used e instead of event
+  event.preventDefault();
 
 
-//
+
+}
+
+function makeHeaderRow () {
+
+}
+
+function makeFooterRow () {
+
+}
+
+function render???
+
+
+var totalOfTotals = 0; //bottom right hand corner cell
+var hourlyTotal = 0;
+
+for (var i = 0; i < hours.length; i++) { //
+  hourlyTotal = 0;
+  for (var j = 0; j < CookieStand.all.length; j++) {
+    hourlyTotal += CookieSTand.all[j].cookiesEAchHour[i];
+  }
+
+//function renderAll (){}
+//render headerrow (){}
+//render  table rows (){}
+//render footer totals () {} //the totals on the far right should be a header
+
 // //START OF DAY 6
 // var pikePlaceMkt = {
 //   location: 'Pike Place Market',
