@@ -3,11 +3,11 @@
 
 //global variables
 //global variable store hours
-var hours = ['am', '7am', '8am', '9am', '10am', '11am', '12pm', '1pm', '2pm','3pm', '4pm', '5pm', '6pm', '7pm'];
+var hours = ['6:00am', '7:00am', '8:00am', '9:00am', '10:00am', '11:00am', '12:00pm', '1:00pm', '2:00pm','3:00pm', '4:00pm', '5:00pm', '6:00pm', '7:00pm'];
 //the master array. This is a global variable for an empty array that holds all five store objects
 var samStore = [];
 // declaring a variable called shopTable and rendering to the DOM using the id of shops and we'll be using this later which is why it needs to be global
-var shopTable = document.getElementById ('shops');
+var shopTable = document.getElementById('shops');
 
 //CONSTRUCTOR FUNCTION (that is technically an object) aka the maker of the stores (with properties)
 function Store(location, minCustomersPerHour, maxCustomersPerHour, avgCookiesPerSale) {
@@ -21,6 +21,8 @@ function Store(location, minCustomersPerHour, maxCustomersPerHour, avgCookiesPer
   this.hourlySales = [];
   this.totalSales = 0; //total daily sales per hour starts at 0 then counts up
   samStore.push(this); //pushing everthing into the samStore array
+  this.getCookiesSold ();
+  this.render ();
 };
 
 //methods
@@ -30,9 +32,7 @@ Store.prototype.calcCustomersPerHour = function() {
     var cust = Math.floor(Math.random() * (this.maxCustomersPerHour - this.minCustomersPerHour) + this.minCustomersPerHour);
     this.hourlyCust.push(cust);
   }
-
 };
-
 //method #2 calculating cookie sales per hour now that we've generated the random number of Cx per hour
 Store.prototype.getCookiesSold = function () {
   this.calcCustomersPerHour(); //calling the method that calcs the random Cx/hour and now that we know it...we can work on this current method that uses it to calculate cookie sales
@@ -41,54 +41,111 @@ Store.prototype.getCookiesSold = function () {
     this.hourlySales.push(cookies);
     this.totalSales += cookies; //+-hourlysales becuase we're adding the hourly sales to the total sales which starts at 0.
   }
-  return this.hourlySales;
+  // return this.hourlySales; DONT NEED..?
 };
 
-//the stores with variables? these are the instances.
-var pike = new Store('Pike Place Market', 23, 65, 6.5);
-var seaTac = new Store('SeaTac Aiport', 3, 24, 1.2);
-var seaCenter = new Store('Seattle Center', 11, 38, 3.7);
-var capHill = new Store('Capitol Hill', 20, 38, 2.3);
-var alki = new Store('Alki', 3, 24, 1.2);
+// pike.getCookiesSold ();
+// seaTac.getCookiesSold ();
+// seaCenter.getCookiesSold ();
+// capHill.getCookiesSold ();
+// alki.getCookiesSold ();
 
-pike.getCookiesSold ();
-seaTac.getCookiesSold ();
-seaCenter.getCookiesSold ();
-capHill.getCookiesSold ();
-alki.getCookiesSold ();
-
+//****************************************
 //functions to create (or render) the table
-Store.prototype.createHeaderRow = function () {
-  var tableRow = document.createElement ('tr');
-  var tableData = document.createElement ('td');
-  var tableHeader = document.createElement ('th');
-  tableHeader.textContent = this.location;
-  tableRow.appendChild (tableHeader);
+//create the ???
+Store.prototype.render = function() {
+  var trEl = document.createElement ('tr');
+  var tdEl = document.createElement ('td'); //these are the locations
+  tdEl.textContent = this.location; //these are the locations
+  trEl.appendChild (tdEl); //appending the data to the table row
+  for (var i = 0; i < hours.length; i++) { //adding +1 so that it adds my last array in the last colomn
+    var tdEl = document.createElement ('td');
+    //give it content
+    tdEl.textContent = this.hourlySales[i];
+    trEl.appendChild(tdEl);
+  }
+  tdEl = document.createElement ('td');
+  tdEl.textContent = this.totalSales;
+  console.log (this.totalSales);
+  trEl.appendChild(tdEl);
+  shopTable.appendChild(trEl);
 };
-//or below is an option...?
-//function createHeaderRow () {
+//this is where I will call the store, on the line above
 
-
+//create header row
+function createHeaderRow () {
+  var headrow = document.createElement('tr');
+  var tableHeader = document.createElement('th');
+  tableHeader.textContent = 'Stores';
+  headrow.appendChild(tableHeader);
+  for (var i = 0; i < hours.length; i++) {
+    var tableHeader = document.createElement('th');
+    tableHeader.textContent = hours[i];
+    headrow.appendChild(tableHeader);
+  }
+  var totalsColumn = document.createElement('th');
+  totalsColumn.textContent = 'Totals';
+  headrow.appendChild(totalsColumn);
+  shopTable.appendChild(headrow);
 }
-Store.prototype.render = function () {
-  var tableRow = document.createElement ('tr');
-  var tableData = document.createElement ('td');
-  tableData.textContent = ' !!!!! ';
-  tableRow.appendChild (tableData);
-  shopTable.appendChild (tableRow);
-};
 
-tdel.tetxcontent = this.ocation //this is waht's putting teh names of hte stores in teh header column
+//
+function handleSubmission(event) {
+  event.preventDefault();
+  var localInput = event.target.loca.value;
+  var minInput = event.target.minCust.value;
+  var maxInput = event.target.maxCust.value;
+  var avgCookies = event.target.avgC.value;
 
-//rendering the data to teh dom in each cell
-for (var i =0; i < this.cookiePErhour....)
-tdel = document.createeleent ('td'
-tdEl.textContent = this.cookie)
-...
+  new Store (localInput, minInput, maxInput, avgCookies);
 
-//appending to teh table
-thetAble.appendChild (trEl)
+  event.target.loca.value = null;
+  event.target.minCust.value = null;
+  event.target.maxCust.value = null;
+  event.target.avgC.value = null;
+}
 
+createHeaderRow ();
+//these are the instances. I moved this down, past the
+new Store('Pike Place Market', 23, 65, 6.5);
+new Store('SeaTac Airport', 3, 24, 1.2);
+new Store('Seattle Center', 11, 38, 3.7);
+new Store('Capitol Hill', 20, 38, 2.3);
+new Store('Alki', 3, 24, 1.2);
+
+newLocations.addEventListener('submit', handleSubmission);
+
+//now we have to push itmes into the above header column
+  //below is the first draft of the header row
+  // Store.prototype.createHeaderRow = function () {
+  // var tableRow = document.createElement ('tr');
+  // var tableData = document.createElement ('td');
+  // var tableHeader = document.createElement ('th');
+  // tableHeader.textContent = this.location;
+  // tableRow.appendChild (tableHeader);
+
+// }
+// Store.prototype.render = function () {
+//   var tableRow = document.createElement ('tr');
+//   var tableData = document.createElement ('td');
+//   tableData.textContent = ' !!!!! ';
+//   tableRow.appendChild (tableData);
+//   shopTable.appendChild (tableRow);
+// };
+//
+// tdel.textcontent = this.location //this is waht's putting teh names of hte stores in teh header column
+//
+// //rendering the data to teh dom in each cell
+// for (var i =0; i < this.hourlySales....)
+// tdel = document.createElement('td')
+// tdEl.textContent = this.cookie)
+// ...
+//
+// //appending to teh table
+// shopTable.appendChild (trEl)
+//***********************
+
+//SAM'S ROUGH DRAFT
 //totals column
 
 //function headerrow (){}

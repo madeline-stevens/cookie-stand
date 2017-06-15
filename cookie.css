@@ -1,0 +1,16 @@
+td, th, tr {
+  border: 4px;
+  border-collapse:
+  margin: 0;
+  padding: 15px;
+  background-color: lightblue;
+  border-spacing: 3px 3px;
+}
+
+.cont {
+  border: 10px;
+}
+
+form {
+  background: lightblue;
+}
