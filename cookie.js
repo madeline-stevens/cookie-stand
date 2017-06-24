@@ -1,7 +1,7 @@
 'use strict';
 
 //global variables
-//global variable store hours
+//store hours
 var hours = ['6:00am', '7:00am', '8:00am', '9:00am', '10:00am', '11:00am', '12:00pm', '1:00pm', '2:00pm','3:00pm', '4:00pm', '5:00pm', '6:00pm', '7:00pm'];
 //the master array. This is a global variable for an empty array that holds all five store objects
 var samStore = [];
@@ -27,6 +27,7 @@ function Store(location, minCustomersPerHour, maxCustomersPerHour, avgCookiesPer
 
 //rendering to the DOM
 Store.prototype.render = function() {
+  console.log('inside render method');
   var trEl = document.createElement('tr');
   var tdEl = document.createElement('td');
   tdEl.textContent = this.location;
@@ -51,7 +52,7 @@ Store.prototype.calcCustomersPerHour = function() {
   }
 };
 //method #2 calculating cookie sales per hour now that we've generated the random number of Cx per hour
-Store.prototype.getCookiesSold = function () {
+Store.prototype.getCookiesSold = function() {
   this.calcCustomersPerHour();
   for (var i = 0; i < hours.length; i++) {
     var cookies = Math.ceil(this.hourlyCust[i] * this.avgCookiesPerSale);
@@ -64,28 +65,31 @@ Store.prototype.getCookiesSold = function () {
 
 //create header row method
 function createHeaderRow() {
+  console.log('inside createHeaderRow method');
   var headrow = document.createElement('tr');
   var tableHeader = document.createElement('th');
   tableHeader.textContent = 'Stores';
-  headrow.appendChild(tableHeader);//headrow.appendChild(tableHeader);
+  headrow.appendChild(tableHeader);
   for (var i = 0; i < hours.length; i++) {
     var tableHeader = document.createElement('th');
     tableHeader.textContent = hours[i];
     headrow.appendChild(tableHeader);
   }
   var totalsColumn = document.createElement('th');
-  totalsColumn.textContent = 'Totals';
-  headrow.appendChild(totalsColumn);
+  // totalsColumn.textContent = 'Totals';
+  // headrow.appendChild(totalsColumn);
   shopTable.appendChild(headrow);
 }
 // start of render all function
 function renderAll(){
+  console.log('inside renderAll method');
   for(var i = 0; i < samStore.length; i++) {
     samStore[i].render();
   }
 };
 //start of creating footer row function (with total of totals cell)
 function makeFooterRow() {
+  console.log('inside makeFooterRow method');
   var footrow = document.createElement('tr');
   var tableFooter = document.createElement('th');
   tableFooter.textContent = 'totals per hour';
@@ -105,7 +109,7 @@ function makeFooterRow() {
   tableFooter.textContent = grandTotal.reduce(function(total,sum){
     return total + sum;
   });
-  footrow.appendChild(tableFooter);
+  footrow.appendChild(tableFooter);//??
   shopTable.appendChild(footrow);//THERE WAS A SPACE HERE
 }
 //end of footer row function
@@ -136,35 +140,8 @@ function handleSubmission(event){
   event.target.avgC.value = null;
   shopTable.innerHTML = '';
 
-  var storeExists = doesStoreExist (storeLocations, name);
-  var index;
-
-  function doesStoreExist (x, y) {
-    for (var i = 0; i < x.length; i++) {
-      if (x[i].name === y) {
-        index = i;
-        return true;
-      } else {
-        return false;
-      }
-      doesStoreExist (storeLocation, name);
-
-      if (storeExists === true) {
-        console.log ('found name');
-        samStore[index].minCust = parseInt(minCust);
-        samStore[index].maxCust = parseInt(maxCust);
-        samStore[index].avgC = parseFloat(avgC);
-        samStore[index].hourlyCust = [];
-        samStore[index].hourlySales = [];
-        samStore[index].totalSales = 0;
-        samStore[index].calcCustomersPerHour();
-        samStore[index].getCookiesSold();
-      }
-
-      if (storeExists === false)
-        var newStore = new Store(localInput, minInput, maxInput, avgCookies);
-    }
-  }
+  // var storeExists = doesStoreExist(storeLocations, name);
+  // var index;
 
   createHeaderRow();
   renderAll();
